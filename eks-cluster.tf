@@ -36,15 +36,22 @@ resource "aws_eks_node_group" "nodes" {
   cluster_name    = aws_eks_cluster.Example.name
   node_group_name = "EKS-nodes"
   node_role_arn   = aws_iam_role.example.arn
-  subnet_ids      = aws_subnet.my_pubsubnet.id
-  instance_types  = var.instance_type
+  subnet_ids     = [aws_subnet.my_pubsubnet.id, aws_subnet.my_pubsubnet_1.id]
+  #instance_types  = var.instance_type
 
   scaling_config {
     desired_size = 1
     max_size     = 2
     min_size     = 1
   }
+}
 
+resource "aws_launch_template" "my_launch_template" {
+  name_prefix = var.name_prefix
+  image_id    = var.image_id # Specify your desired AMI ID
+  instance_type = var.instance_type # Specify your desired instance type
+  key_name    = var.key_name   # Specify your SSH keypair
+}
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
@@ -53,4 +60,3 @@ resource "aws_eks_node_group" "nodes" {
   #     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
   #     aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
   #   ]
-}

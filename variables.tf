@@ -1,9 +1,3 @@
-
-# variable region {
-#     type = string
-#     default = "us-east-1"
-# }
-
 variable "sg_group" {
   type    = string
   default = "sg_gr"
@@ -15,22 +9,40 @@ variable "sg_region" {
 }
 
 variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+  default = []
 }
 
 variable "public_subnet_cidr" {
-  default = "10.0.1.0/24"
+  default = []
 }
+
+variable "public_subnet_cidr_1" {
+  default = []
+}
+
 
 variable "private_subnet_cidr" {
-
-  default = "10.0.2.0/24"
+  default = []
 }
+
 variable "instance_type" {
+   default = []
+}
+
+variable "region" {
   default = []
 }
 
-variable "location" {
+variable "name_prefix" {
   default = []
+  
 }
- 
+
+variable "image_id" {
+  default = []
+  
+}
+variable "key_name" {
+  default = []
+  
+}
